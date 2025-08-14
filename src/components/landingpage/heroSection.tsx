@@ -40,7 +40,7 @@ export const HeroSection = () => {
 function Stat({
   label = "Label",
   value = "—",
-  icon = null as any,
+  icon
 }: {
   label?: string
   value?: string
