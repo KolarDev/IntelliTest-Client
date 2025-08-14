@@ -4,7 +4,6 @@ interface ButtonProps {
   buttonText?: string;
   className?: string;
   href?: string;
-  variant: "primary" | "secondary";
   onClick?: () => void;
   children?: React.ReactNode;
 }
@@ -25,7 +24,7 @@ export const Button = ({
       {children}
     </Link>
   ) : (
-    <button type="button" className={`${className}`}>
+    <button type="button" className={`${className} px-4 py-2 rounded-xl`}>
       {buttonText}
     </button>
   );
