@@ -1,10 +1,5 @@
 "use client"
-
-import type React from "react"
-
-import Image from "next/image"
 import { Sparkles, BarChart3, GraduationCap } from "lucide-react"
-import Link from "next/link"
 import { Button } from "../button"
 
 export const HeroSection = () => {
@@ -16,7 +11,7 @@ export const HeroSection = () => {
             <Sparkles className="size-3 text-[#8532fa]" />
             <span>AI-powered CBT & Student Management for Schools</span>
           </div>
-          <h1 className="text-4xl font-bold tracking-normal md:text-5xl">
+          <h1 className="text-4xl tracking-normal md:text-5xl">
             Transforming schools into automated academic hubs.  
           </h1>
           <p className="md:w-[70%]">
