@@ -1,3 +1,4 @@
+import Link from "next/link";
 
 interface ButtonProps {
   buttonText?: string;
@@ -8,8 +9,24 @@ interface ButtonProps {
   children?: React.ReactNode;
 }
 
-export const Button = () => {
-  return (
-    <div>button</div>
-  )
-}
+export const Button = ({
+  buttonText,
+  className = "",
+  href,
+  onClick,
+  children,
+}: ButtonProps) => {
+  return href ? (
+    <Link
+      href={href}
+      className={`rounded-xl font-semibold block cursor-pointer ${className}`}
+      onClick={onClick}
+    >
+      {children}
+    </Link>
+  ) : (
+    <button type="button" className={`${className}`}>
+      {buttonText}
+    </button>
+  );
+};
