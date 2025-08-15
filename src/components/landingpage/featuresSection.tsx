@@ -3,11 +3,6 @@ import {
   Brain,
   ClipboardList,
   BarChart3,
-  ShieldCheck,
-  MessageSquareText,
-  WifiOff,
-  Users2,
-  Wallet,
 } from "lucide-react";
 
 export const FeatureSection = () => {
