@@ -41,11 +41,11 @@ export const FeatureSection = () => {
         </div>
         <div className="mt-10 grid gap-6 grid-cols-1 md:grid-cols-3">
           {features.map((feature, i) => (
-            <div className="bg-white border-2 rounded-2xl p-4 border-textGrey/10 flex flex-col gap-3 justify-center md:h-[300px]" key={i}>
+            <div className="bg-white border-2 rounded-2xl p-4 border-textGrey/10 flex flex-col gap-3 justify-center h-[300px]" key={i}>
               <div className="mb-2 inline-flex h-10 w-10 items-center justify-center rounded-md bg-purple-50">
                 <feature.icon className="size-5 text-[#8532fa]" />
               </div>
-              <h2 className="text-lg font-semibold">{feature.title}</h2>
+              <h2 className="text-2xl font-semibold md:text-lg">{feature.title}</h2>
               <p className="text-sm text-muted-foreground text-textGrey">{feature.desc}</p>
             </div>
           ))}
