@@ -11,7 +11,6 @@ export default function Home() {
       <HeroSection />
       <FeatureSection />
       <BenefitsSections />
-      <div className="h-[400vh]"></div>
     </>
   );
 }
