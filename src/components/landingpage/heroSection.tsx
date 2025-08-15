@@ -4,7 +4,7 @@ import { Button } from "../button"
 
 export const HeroSection = () => {
   return (
-    <section className="relative w-full overflow-hidden bg-gradient-to-br from-purple-50/80 via-white to-indigo-50/60">
+    <section className="relative w-full overflow-hidden bg-gradient-to-br from-purple-100/60 via-white to-indigo-100/50">
       <div className="container grid items-center gap-8 px-5 py-16 md:grid-cols-[60%_40%] md:px-10 md:gap-12 md:py-24">
         <div className="space-y-8">
           <div className="inline-flex items-center gap-2 rounded-full bg-white px-3 py-1 text-xs shadow-sm ">
