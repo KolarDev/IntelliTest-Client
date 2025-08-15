@@ -24,7 +24,7 @@ export const Button = ({
       {children}
     </Link>
   ) : (
-    <button type="button" className={`${className} px-4 py-2 rounded-xl`}>
+    <button type="button" className={`${className} px-4 py-2 rounded-xl cursor-pointer`}>
       {buttonText}
     </button>
   );
