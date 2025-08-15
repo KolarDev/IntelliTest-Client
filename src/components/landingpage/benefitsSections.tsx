@@ -78,16 +78,16 @@ export const BenefitsSections = () => {
             />
           </div>
           {/* Benefits */}
-          <aside className="w-[50%]">  
+          <aside className="md:w-[50%]">  
             <div className="">
               {benefits.map((item, i) => (
-                <div key={i} className="flex gap-5 mb-4 items-center">
+                <div key={i} className="flex gap-5 mb-10 md:mb-4 md:items-center">
                   <div className={`w-12 h-12 ${item.bg} rounded-lg flex items-center justify-center flex-shrink-0`}>
                     <item.icon className={`h-6 w-6 ${item.color}`} />
                   </div>
                   <div>
                     <h2 className="text-xl pb-[2px]">{item.title}</h2>
-                    <p className="text-sm text-textGrey w-[80%]">{item.desc}</p>
+                    <p className="text-sm text-textGrey md:w-[80%]">{item.desc}</p>
                   </div>
                 </div>
               ))}
