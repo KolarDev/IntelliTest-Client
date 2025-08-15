@@ -27,7 +27,7 @@ export const FeatureSection = () => {
   return (
     <section
       id="features"
-      className="w-full bg-gradient-to-tr from-purple-100/60 via-purple-50/10 to-indigo-100/50"
+      className="w-full pb-10 bg-gradient-to-tr from-purple-100/60 via-purple-50/10 to-indigo-100/50"
     >
       <Container className="container px-4 py-16 md:px-10 md:py-24">
         <div className="flex flex-col md:flex-row md:items-center  md:justify-between">
