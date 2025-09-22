@@ -38,10 +38,17 @@ export const Navbar = () => {
         </nav>
 
         <div className="flex items-center space-x-4">
-          <div className="hidden md:block">
+          <div className="hidden md:flex md:items-center md:space-x-3">
+            <Link
+              href="/auth/login"
+              className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
+            >
+              Sign In
+            </Link>
             <Button  
+              href="/auth/register"
               buttonText="Get Started"
-              className="bg-gradient-to-r text-white from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+              className="bg-gradient-to-r text-white from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 px-4 py-2"
             />
           </div>
           

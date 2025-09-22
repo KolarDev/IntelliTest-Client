@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Script from 'next/script';
+import { ReduxProvider } from '../components/ReduxProvider';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,18 +29,10 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
-        <Script
-          src="https://checkout.flutterwave.com/v3.js"
-          strategy="beforeInteractive"
-        />
+        <ReduxProvider>
+          {children}
+        </ReduxProvider>
       </body>
     </html>
   );
 }
-1
-JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU4Nzg1MzU2LCJpYXQiOjE3NTg1MjYxNTYsImp0aSI6Ijk3NTk4MmMxNGU1MjQ5MDZhMjgxZDI0ZThhZjcxYzhmIiwidXNlcl9pZCI6M30.rnLXWNIbQaJvSDn6428mz4xrHRv3dSyX9WNpmIGe2bc
-3
-JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU4Nzg1MjQ0LCJpYXQiOjE3NTg1MjYwNDQsImp0aSI6IjA2MzI1MjAxYjBkYzQxOWZhZjA4MzY5YTMzYmI5NTQ1IiwidXNlcl9pZCI6MX0.rGatUgKOkRERCrtFrgwoVRjzTtzRv2RnFeHwiBX7ZT0
-4
-JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU4Nzg2NjMzLCJpYXQiOjE3NTg1Mjc0MzMsImp0aSI6IjhiN2M1NzY5NTE4MzQ1NzM4NjBhZDI1N2FiODQ3YTBkIiwidXNlcl9pZCI6Mn0.PAeEq_36R0U4Zu4ZGps1RlX7-0mEr8jDeXdMAM-bxFU
