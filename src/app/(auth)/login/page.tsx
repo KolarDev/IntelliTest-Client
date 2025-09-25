@@ -1,23 +1,47 @@
 "use client";
 
 import React, { useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { loginUser, registerOrganization, clearError } from '../../../store/slices/authSlice';
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
 // Define the component's state type for clarity and type safety.
 type AuthState = {
   view: 'login' | 'signup';
   email: string;
   password: string;
-  userType: 'Student' | 'Teacher' | 'Parent' | '';
+  firstName: string;
+  lastName: string;
+  organizationName: string;
 };
 
 const AuthPage: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const router = useRouter();
+  const { loading, error, isAuthenticated } = useAppSelector((state) => state.auth);
+  
   // Use a single state object to manage the component's state.
   const [state, setState] = useState<AuthState>({
     view: 'signup', // Default view is signup as requested.
     email: '',
     password: '',
-    userType: '',
+    firstName: '',
+    lastName: '',
+    organizationName: '',
   });
+
+  // Redirect if authenticated
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.push('/dashboard');
+    }
+  }, [isAuthenticated, router]);
+
+  // Clear errors when switching views
+  useEffect(() => {
+    dispatch(clearError());
+  }, [state.view, dispatch]);
 
   // Handle input changes for all form fields.
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -28,25 +52,43 @@ const AuthPage: React.FC = () => {
     }));
   };
 
-  // Handle the login form submission. (Currently logs to console)
-  const handleLogin = (e: React.FormEvent) => {
+  // Handle the login form submission.
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Login attempt:', {
-      email: state.email,
-      password: state.password,
-    });
-    // In a real application, you would call your authentication API here.
+    if (!state.email || !state.password) {
+      return;
+    }
+    
+    try {
+      await dispatch(loginUser({
+        email: state.email,
+        password: state.password,
+      })).unwrap();
+    } catch (error) {
+      // Error is handled by Redux
+      console.error('Login failed:', error);
+    }
   };
 
-  // Handle the signup form submission. (Currently logs to console)
-  const handleSignup = (e: React.FormEvent) => {
+  // Handle the signup form submission.
+  const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Signup attempt:', {
-      email: state.email,
-      password: state.password,
-      userType: state.userType,
-    });
-    // In a real application, you would call your authentication API here.
+    if (!state.email || !state.password || !state.firstName || !state.lastName || !state.organizationName) {
+      return;
+    }
+    
+    try {
+      await dispatch(registerOrganization({
+        email: state.email,
+        password: state.password,
+        firstName: state.firstName,
+        lastName: state.lastName,
+        organizationName: state.organizationName,
+      })).unwrap();
+    } catch (error) {
+      // Error is handled by Redux
+      console.error('Registration failed:', error);
+    }
   };
 
   // Switch between the login and signup forms.
@@ -129,8 +171,47 @@ const AuthPage: React.FC = () => {
             </p>
           </div>
 
+          {/* Display error message */}
+          {error && (
+            <div className="mb-4 p-3 bg-red-500/10 border border-red-500/50 rounded-lg">
+              <p className="text-red-400 text-sm">{error}</p>
+            </div>
+          )}
+          
           {state.view === 'signup' ? (
             <form onSubmit={handleSignup} className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label htmlFor="firstName" className="block text-sm font-medium text-grey-300">
+                    First Name
+                  </label>
+                  <input
+                    type="text"
+                    id="firstName"
+                    name="firstName"
+                    value={state.firstName}
+                    onChange={handleChange}
+                    required
+                    className="mt-1 block w-full px-4 py-3 bg-gray-700 text-white rounded-lg border-2 border-transparent focus:border-purple-500 focus:outline-none transition-colors"
+                    placeholder="John"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="lastName" className="block text-sm font-medium text-grey-300">
+                    Last Name
+                  </label>
+                  <input
+                    type="text"
+                    id="lastName"
+                    name="lastName"
+                    value={state.lastName}
+                    onChange={handleChange}
+                    required
+                    className="mt-1 block w-full px-4 py-3 bg-gray-700 text-white rounded-lg border-2 border-transparent focus:border-purple-500 focus:outline-none transition-colors"
+                    placeholder="Doe"
+                  />
+                </div>
+              </div>
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-grey-300">
                   Email
@@ -162,30 +243,28 @@ const AuthPage: React.FC = () => {
                 />
               </div>
               <div>
-                <label htmlFor="userType" className="block text-sm font-medium text-grey-300">
-                  Who are you?
+                <label htmlFor="organizationName" className="block text-sm font-medium text-grey-300">
+                  Organization Name
                 </label>
-                <select
-                  id="userType"
-                  name="userType"
-                  value={state.userType}
+                <input
+                  type="text"
+                  id="organizationName"
+                  name="organizationName"
+                  value={state.organizationName}
                   onChange={handleChange}
                   required
-                  className="mt-1 block w-full px-4 py-3 bg-gray-700 text-gray-300 rounded-lg border-2 border-transparent focus:border-purple-500 focus:outline-none transition-colors appearance-none pr-8 cursor-pointer"
-                >
-                  <option value="" disabled>Select your role</option>
-                  <option value="Student">Student</option>
-                  <option value="Teacher">Teacher</option>
-                  <option value="Parent">Parent</option>
-                </select>
+                  className="mt-1 block w-full px-4 py-3 bg-gray-700 text-white rounded-lg border-2 border-transparent focus:border-purple-500 focus:outline-none transition-colors"
+                  placeholder="Your School/Organization"
+                />
               </div>
               
               <div>
                 <button
                   type="submit"
-                  className="py-3 px-6 text-lg font-semibold text-white bg-gradient-to-r from-purple-500 to-indigo-600 rounded-md shadow-lg hover:from-purple-600 hover:to-indigo-700 transition-all transform hover:scale-[1.01] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 focus:ring-offset-gray-900"
+                  disabled={loading}
+                  className="w-full py-3 px-6 text-lg font-semibold text-white bg-gradient-to-r from-purple-500 to-indigo-600 rounded-md shadow-lg hover:from-purple-600 hover:to-indigo-700 transition-all transform hover:scale-[1.01] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 focus:ring-offset-gray-900 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                 >
-                  Create account
+                  {loading ? 'Creating account...' : 'Create account'}
                 </button>
               </div>
             </form>
@@ -225,9 +304,10 @@ const AuthPage: React.FC = () => {
               <div>
                 <button
                   type="submit"
-                  className="py-3 px-6 text-lg font-semibold text-white bg-gradient-to-r from-purple-500 to-indigo-600 rounded-lg shadow-lg hover:from-purple-600 hover:to-indigo-700 transition-all transform hover:scale-[1.01] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 focus:ring-offset-gray-900"
+                  disabled={loading}
+                  className="w-full py-3 px-6 text-lg font-semibold text-white bg-gradient-to-r from-purple-500 to-indigo-600 rounded-lg shadow-lg hover:from-purple-600 hover:to-indigo-700 transition-all transform hover:scale-[1.01] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 focus:ring-offset-gray-900 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                 >
-                  Log In
+                  {loading ? 'Logging in...' : 'Log In'}
                 </button>
               </div>
             </form>
