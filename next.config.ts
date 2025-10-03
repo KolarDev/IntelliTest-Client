@@ -1,7 +1,8 @@
 const nextConfig = {
   allowedDevOrigins: [
-    "https://builder.io",
-    "https://*.fly.dev",
+    "builder.io",
+    "*.builder.io",
+    "*.fly.dev",
   ],
 };
 
