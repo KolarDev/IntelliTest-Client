@@ -5,6 +5,9 @@ import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { loginUser, registerOrganization, clearError } from '../../../store/slices/authSlice';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
+import { useToast } from '../../../contexts/ToastContext';
+import { ToastProvider } from '../../../contexts/ToastContext';
+import ToastContainer from '../../../components/ui/ToastContainer';
 
 // Define the component's state type for clarity and type safety.
 type AuthState = {
@@ -16,9 +19,10 @@ type AuthState = {
   organizationName: string;
 };
 
-const AuthPage: React.FC = () => {
+const AuthPageContent: React.FC = () => {
   const dispatch = useAppDispatch();
   const router = useRouter();
+  const { addToast } = useToast();
   const { loading, error, isAuthenticated } = useAppSelector((state) => state.auth);
   
   // Use a single state object to manage the component's state.
@@ -56,6 +60,11 @@ const AuthPage: React.FC = () => {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!state.email || !state.password) {
+      addToast({
+        type: 'error',
+        title: 'Missing Information',
+        message: 'Please enter both email and password'
+      });
       return;
     }
     
@@ -64,9 +73,18 @@ const AuthPage: React.FC = () => {
         email: state.email,
         password: state.password,
       })).unwrap();
+      
+      addToast({
+        type: 'success',
+        title: 'Login Successful',
+        message: 'Welcome back! Redirecting to dashboard...'
+      });
     } catch (error) {
-      // Error is handled by Redux
-      console.error('Login failed:', error);
+      addToast({
+        type: 'error',
+        title: 'Login Failed',
+        message: error as string || 'Invalid credentials'
+      });
     }
   };
 
@@ -74,6 +92,11 @@ const AuthPage: React.FC = () => {
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!state.email || !state.password || !state.firstName || !state.lastName || !state.organizationName) {
+      addToast({
+        type: 'error',
+        title: 'Missing Information',
+        message: 'Please fill in all required fields'
+      });
       return;
     }
     
@@ -85,9 +108,18 @@ const AuthPage: React.FC = () => {
         lastName: state.lastName,
         organizationName: state.organizationName,
       })).unwrap();
+      
+      addToast({
+        type: 'success',
+        title: 'Registration Successful',
+        message: 'Organization created! Redirecting to dashboard...'
+      });
     } catch (error) {
-      // Error is handled by Redux
-      console.error('Registration failed:', error);
+      addToast({
+        type: 'error',
+        title: 'Registration Failed',
+        message: error as string || 'Failed to create organization'
+      });
     }
   };
 
