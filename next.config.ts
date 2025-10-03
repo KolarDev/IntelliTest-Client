@@ -1,7 +1,8 @@
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
-  /* config options here */
+const nextConfig = {
+  allowedDevOrigins: [
+    "https://builder.io",
+    "https://*.fly.dev",
+  ],
 };
 
 export default nextConfig;
