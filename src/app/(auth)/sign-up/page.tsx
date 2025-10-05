@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { Button } from "@/components/button";
 import { useToast } from "@/components/ui/toastProvider";
 
@@ -36,7 +36,7 @@ export default function SignUpPage() {
 
   const { pushToast } = useToast();
 
-  const progress = useMemo(() => (step === 1 ? "50%" : "100%"), [step]);
+  const progressClass = step === 1 ? "w-1/2" : "w-full";
 
   const goNext = () => {
     if (!userDetails.email || !userDetails.password || !userDetails.confirmPassword || !userDetails.firstName || !userDetails.lastName) {
@@ -87,8 +87,7 @@ export default function SignUpPage() {
       </div>
       <div className="h-2 rounded-full bg-gray-100">
         <div
-          className="h-full rounded-full bg-gradient-to-r from-blue-600 to-purple-600 transition-all duration-300"
-          style={{ width: progress }}
+          className={`h-full rounded-full bg-gradient-to-r from-blue-600 to-purple-600 transition-all duration-300 ${progressClass}`}
         />
       </div>
     </div>
