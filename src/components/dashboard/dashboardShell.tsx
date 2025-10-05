@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import type { ReactNode } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -15,14 +16,14 @@ import {
 } from "lucide-react";
 
 interface DashboardShellProps {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 interface NavigationItem {
   label: string;
   href: string;
   description: string;
-  icon: React.ReactNode;
+  icon: ReactNode;
 }
 
 const navigationItems: NavigationItem[] = [
